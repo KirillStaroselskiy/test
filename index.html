@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My PWA</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <script>
+        function updateAppTitle() {
+            const now = new Date();
+            const isChristmas = now.getMonth() === 11 && now.getDate() === 25;
+            const isNewYear = now.getMonth() === 0 && now.getDate() === 1;
+
+            let appTitle = "Моё приложение"; // Обычное название
+
+            if (isChristmas) {
+                appTitle = "🎄 Рождественское приложение";
+            } else if (isNewYear) {
+                appTitle = "🎉 Новогоднее приложение";
+            }
+
+            document.title = appTitle; // Меняем заголовок страницы
+            document.getElementById("app-title").textContent = appTitle;
+        }
+
+        document.addEventListener("DOMContentLoaded", updateAppTitle);
+    </script>
+</head>
+<body>
+    <h1 id="app-title">Моё приложение</h1>
+    <p>Это PWA, которое меняет название в зависимости от даты! 🎉</p>
+    <p>Добавьте его на домашний экран для лучшего опыта.</p>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').then(() => {
+                console.log("Service Worker зарегистрирован!");
+            }).catch(error => {
+                console.log("Ошибка регистрации Service Worker:", error);
+            });
+        }
+    </script>
+</body>
+</html>
